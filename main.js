@@ -223,6 +223,11 @@ justify-content:left;
         });
     });
 });
+	if(subtitles.length == 0 && titles.length <= 5) {
+		sidebar.style = "display:none;"	
+	} else if(subtitles.length == 0) {
+		collapse.style = "display:none;"
+		}
 })();
 
 function displayMenu() {
