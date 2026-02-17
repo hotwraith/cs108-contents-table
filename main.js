@@ -18,7 +18,7 @@
     let HTMLSubtitles = document.getElementsByTagName('h3')
     let titles = [];
     let subtitles = [];
-    let exceptions = ["My", "Home", "Projet", "Exercices", "Examens"]
+    let exceptions = ["My", "Home", "Cours", "Projet", "Exercices", "Examens"]
     for (let i = 0; i < HTMLTitles.length; i++) {
         titles.push(HTMLTitles[i])
     }
@@ -48,7 +48,12 @@
     exams.textContent = "Examens"
     exams.id = "https://cs108.epfl.ch/x/";
 
+    let cours = document.createElement("h2");
+    cours.textContent = "Cours";
+    cours.id = "https://cs108.epfl.ch/c/";
+
     titles.push(home);
+    titles.push(cours);
     titles.push(project);
     titles.push(exercices);
     titles.push(exams);
@@ -223,8 +228,8 @@ justify-content:left;
         });
     });
 });
-	if(subtitles.length == 0 && titles.length <= 5) {
-		sidebar.style = "display:none;"	
+	if(subtitles.length == 0 && titles.length <= exceptions.length) {
+		sidebar.style = "display:none;"
 	} else if(subtitles.length == 0) {
 		collapse.style = "display:none;"
 		}
