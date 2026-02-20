@@ -16,8 +16,10 @@
 (function () {
     let HTMLTitles = document.getElementsByTagName('h2')
     let HTMLSubtitles = document.getElementsByTagName('h3')
+    let HTMLSubSubTitles = document.getElementsByTagName('h4')
     let titles = [];
     let subtitles = [];
+    let subsubtitles = [];
     let exceptions = ["My", "Home", "Cours", "Projet", "Exercices", "Examens"]
     for (let i = 0; i < HTMLTitles.length; i++) {
         titles.push(HTMLTitles[i])
@@ -25,7 +27,9 @@
     for (let i = 0; i < HTMLSubtitles.length; i++) {
         subtitles.push(HTMLSubtitles[i])
     }
-    console.log(titles)
+    for(let i = 0; i < HTMLSubSubTitles.length; i++) {
+        subsubtitles.push(HTMLSubSubTitles[i]);
+    }
     'use strict';
 
     let my = document.createElement("h2")
@@ -65,11 +69,12 @@
     collapse.textContent = "Extend"
     collapse.classList = "sidebar-button"
     sidebar.appendChild(collapse)
+
     let div = document.createElement("div")
     div.classList = 'topnav'
     for (let i = 0; i < titles.length; i++) {
         if(titles[i].id != ''){
-            console.log(titles[i].id)
+            //console.log(titles[i].id)
             let link = document.createElement("a");
             let strong = document.createElement("strong");
             strong.textContent = titles[i].textContent;
@@ -86,7 +91,20 @@
                         sublink.href = "#"+subtitles[j].id.replace('/', '\\/');
                         sublink.textContent = subtitles[j].textContent;
                         sidebar.appendChild(sublink);
-                    }
+
+                    for(let z = 0; z < subsubtitles.length; z++) {
+                        if(subsubtitles[z].textContent[2] === subtitles[j].textContent[2] && subsubtitles[z].textContent[0] === subtitles[j].textContent[0]){
+                            let sublink = document.createElement("a")
+                            sublink.classList = "collapsable-1"
+                            sublink.href = "#"+subsubtitles[z].id.replace('/', '\\/');
+                            let ital = document.createElement("i");
+                            let smol = document.createElement("small");
+                            smol.textContent = subsubtitles[z].textContent;
+                            ital.appendChild(smol);
+                            sublink.appendChild(ital);
+                            sidebar.appendChild(sublink);
+                        }
+                    }}
                 }
             } else{
                 link.href = titles[i].id
@@ -185,6 +203,10 @@ justify-content:left;
   display: none !important;
 }
 
+.collapsable-1 {
+  display: none !important;
+}
+
 .sidebar .sidebar-button {
   position: sticky;
   top: 0;
@@ -237,13 +259,26 @@ justify-content:left;
 
 function displayMenu() {
     let sublinks = document.getElementsByClassName("collapsable")
+    let subsublinks = document.getElementsByClassName("collapsable-1")
     let button = document.getElementsByClassName("sidebar-button")[0]
     if(button.textContent === "Collapse") {
         button.textContent = "Extend"
-    } else {
-        button.textContent = "Collapse"
+        for(let i = 0; i < subsublinks.length; i++){
+        subsublinks[i].classList.toggle("show")
     }
-    for(let i = 0; i < sublinks.length; i++){
+        for(let i = 0; i < sublinks.length; i++){
         sublinks[i].classList.toggle("show")
     }
+    } else if(button.textContent === "Extend"){
+        button.textContent = "Extend again"
+        for(let i = 0; i < sublinks.length; i++){
+        sublinks[i].classList.toggle("show")
+    }
+    } else if(button.textContent === "Extend again") {
+        button.textContent = "Collapse"
+        for(let i = 0; i < subsublinks.length; i++){
+        subsublinks[i].classList.toggle("show")
+    }
+    }
+
 }
